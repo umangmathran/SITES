@@ -9,30 +9,41 @@
   <h1>Hello {{name}}</h1>
 </div>
 <div>
-<?php
-    echo "Ravibhushan Kumar<br/>";
-    $arr=array();
-    array_push($arr,1);
-    array_push($arr,1);
+<table class="table" width="50%">
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Depertment Name</td>
+            <td>Total Credit</td>
+        </tr>
+        <?php
+            $host="127.0.0.1";
+            $userName="root";
+            $pass="Ravi@8603";
+            $dbName="practice";
 
-    for ($i=2; $i<50 ; $i++) {
-        $arr[$i]=$arr[$i-1]+$arr[$i-2];
-        echo $arr[$i]."<br/>";
-    }
-    function func($a)
-    {
-        if($a==1){
-            return 1;
-        }
+            $conn=new mysqli($host,$userName,$pass,$dbName);
 
-        if($a==2){
-            return 1;
-        }
-        return func($a-1)+func($a-2);
-    }
-
-    echo func(15)
-?>
+            $query="Select * from student";
+            $result=$conn->query($query);
+            $rows=$result->num_rows;
+            /*for($i=0;$i<$rows;$i++){
+                $data=$result->fetch_assoc();
+                echo "<tr><td>".$data['ID']."</td>";
+                echo "<td>".$data['name']."</td>";
+                echo "<td>".$data['dept_name']."</td>";
+                echo "<td>".$data['tot_cred']."</td></tr>";
+            }*/
+            while($data=$result->fetch_assoc()){
+                echo "<tr><td>".$data['ID']."</td>";
+                echo "<td>".$data['name']."</td>";
+                echo "<td>".$data['dept_name']."</td>";
+                echo "<td>".$data['tot_cred']."</td></tr>";
+            }
+            $result->close;
+            $conn->close;
+        ?>
+    </table>
 </div>
 </body>
 </html>
